@@ -81,6 +81,9 @@ for _, strategy in helpers.each_strategy() do
       -- Making sure it's alright
       local log_message = cjson.decode(res)
       assert.equal("127.0.0.1", log_message.client_ip)
+
+      -- Since it's over HTTP, let's make sure there are no TLS information
+      assert.is_nil(log_message.request.tls.version)
     end)
 
     it("logs proper latencies", function()
